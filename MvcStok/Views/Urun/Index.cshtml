@@ -1,0 +1,53 @@
+﻿@using MvcStok.Models.Entity
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<TblUrunler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Urun", FormMethod.Get))
+{
+    <p>
+        <b>Aranacak ürün adı:</b> @Html.TextBox("p")
+        <input type="submit" value="Ara" />
+    </p>
+}
+
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ÜRÜN ID</th>
+            <th>ÜRÜN ADI</th>
+            <th>MARKASI</th>
+            <th>KATEGORİ</th>
+            <th>FİYAT</th>
+            <th>STOK</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+            <th>SİL2</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urn in Model)
+        {
+            <tr>
+                <th>@urn.UrunID</th>
+                <td>@urn.UrunAd</td>
+                <td>@urn.Marka</td>
+                <td>@urn.TblKategoriler.KategoriAd</td>
+                <td>@urn.Fiyat</td>
+                <td>@urn.Stok</td>
+                <td><a href="/Urun/Sil/@urn.UrunID" class="btn btn-primary">SİL</a></td>
+                <td><a href="/Urun/UrunGetir/@urn.UrunID" class="btn btn-warning">GÜNCELLE</a></td>
+                <td>
+                    @Html.ActionLink("SİL 2", "Sil", new { id = urn.UrunID },
+             new { @class = "btn btn-danger", onclick = "return confirm('Gerçekten silmek istiyor musunuz?')" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
+<a href="/Urun/UrunEkle/" class="btn btn-success">YENİ ÜRÜN EKLE</a>

@@ -1,0 +1,32 @@
+﻿@model MvcStok.Models.Entity.TblUrunler
+@{
+    ViewBag.Title = "UrunEkle";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<form method="post" class="form-group">
+    <div>
+        <label>Ürün Adı</label>
+        <input type="text" class="form-control" name="UrunAd" required="" maxlength="30"/>
+    </div>
+    <div style="margin-top:15px">
+        <label>Ürün Markası</label>
+        <input type="text" class="form-control" name="Marka" required="" placeholder="Buraya markayı yazınız..." />
+    </div>
+    <div style="margin-top:15px">
+        <label>Kategori Seçiniz</label>
+        @Html.DropDownListFor(m => m.TblKategoriler.KategoriID , (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Fiyatı</label>
+        <input type="text" class="form-control" required="" name="Fiyat" />
+    </div>
+    <div style="margin-top:15px">
+        <label>Stok Adedi</label>
+        <input type="text" class="form-control" required="" name="Stok" />
+    </div>
+    <div style="margin-top:20px">
+        <button class="btn btn-info">Ürün Ekle</button>
+    </div>
+</form>
+
